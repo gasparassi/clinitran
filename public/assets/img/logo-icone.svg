@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="t">
+  <title id="t">Símbolo Clinitran: volante com um olho no centro</title>
+  <!-- Aro do volante -->
+  <circle cx="60" cy="60" r="56" fill="#E07B2E"/>
+  <circle cx="60" cy="60" r="43" fill="#FFFFFF"/>
+  <!-- Raios do volante -->
+  <rect x="15" y="55" width="22" height="10" rx="3" fill="#E07B2E"/>
+  <rect x="83" y="55" width="22" height="10" rx="3" fill="#E07B2E"/>
+  <rect x="55" y="80" width="10" height="25" rx="3" fill="#E07B2E"/>
+  <!-- Olho no centro do volante -->
+  <path d="M30 60 C 42 40, 78 40, 90 60 C 78 80, 42 80, 30 60 Z" fill="#2B2F36"/>
+  <circle cx="60" cy="60" r="14" fill="#C9A227"/>
+  <circle cx="60" cy="60" r="6" fill="#2B2F36"/>
+  <circle cx="65" cy="55" r="3" fill="#FFFFFF"/>
+</svg>

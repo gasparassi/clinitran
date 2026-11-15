@@ -1,0 +1,754 @@
+/* ==========================================================
+   Clinitran Exames - Exames médicos e psicotécnicos para CNH
+   Folha de estilos própria (personaliza o Bootstrap 5)
+   Cores inspiradas na fachada: parede laranja, placa branca
+   com letras douradas e o asfalto da rua.
+   ========================================================== */
+
+/* ---------- 1. Identidade visual (variáveis) ---------- */
+:root {
+  /* Paleta de cores */
+  --cor-primaria: #E07B2E;          /* Laranja Fachada  - cor principal  */
+  --cor-primaria-escura: #B85A16;   /* usada em textos e botões (contraste) */
+  --cor-secundaria: #C9A227;        /* Dourado Placa    - cor secundária */
+  --cor-secundaria-escura: #8F7210;
+  --cor-destaque: #1D5FA6;          /* Azul Sinalização - cor de destaque */
+  --cor-destaque-escura: #154A85;
+  --cor-escura: #2B2F36;            /* Asfalto - textos, rodapé          */
+  --cor-clara: #FFF8F1;             /* Fundo claro (branco da placa)     */
+  --cor-texto-suave: #5F6670;
+
+  /* Tipografia */
+  --fonte-titulo: 'Exo 2', 'Segoe UI', Arial, sans-serif;
+  --fonte-texto: 'Nunito Sans', 'Segoe UI', Arial, sans-serif;
+
+  /* Elementos visuais */
+  --raio: 14px;
+  --sombra: 0 10px 30px rgba(43, 47, 54, 0.12);
+  --transicao: all 0.3s ease;
+
+  /* Ajustes das variáveis do próprio Bootstrap */
+  --bs-body-font-family: var(--fonte-texto);
+  --bs-body-color: var(--cor-escura);
+  --bs-link-color-rgb: 184, 90, 22;
+  --bs-link-hover-color-rgb: 29, 95, 166;
+}
+
+/* ---------- 2. Base ---------- */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* compensa a navbar fixa */
+}
+
+body {
+  font-family: var(--fonte-texto);
+  color: var(--cor-escura);
+  background-color: #FFFFFF;
+  line-height: 1.65;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  color: var(--cor-escura);
+}
+
+.secao {
+  padding: 90px 0;
+}
+
+.secao-clara {
+  background-color: var(--cor-clara);
+}
+
+.titulo-secao {
+  max-width: 640px;
+  margin: 0 auto 40px;
+}
+
+.titulo-secao h2,
+#sobre h2 {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  position: relative;
+  padding-bottom: 14px;
+}
+
+/* Padrão de título: faixa laranja inclinada abaixo (lembra a faixa da estrada) */
+.titulo-secao h2::after,
+#sobre h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) skewX(-20deg);
+  width: 60px;
+  height: 5px;
+  background-color: var(--cor-primaria);
+}
+
+#sobre h2::after {
+  left: 0;
+  transform: skewX(-20deg);
+}
+
+.subtitulo {
+  display: inline-block;
+  font-family: var(--fonte-titulo);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--cor-secundaria-escura);
+  margin-bottom: 6px;
+}
+
+.sombra {
+  box-shadow: var(--sombra);
+}
+
+/* ---------- 3. Botões ---------- */
+.btn {
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  border-radius: 50px;
+  padding: 10px 26px;
+  transition: var(--transicao);
+}
+
+.btn-lg {
+  padding: 12px 32px;
+}
+
+.btn-primario {
+  background-color: var(--cor-primaria-escura);
+  border: 2px solid var(--cor-primaria-escura);
+  color: #FFFFFF;
+}
+
+.btn-primario:hover,
+.btn-primario:focus {
+  background-color: var(--cor-escura);
+  border-color: var(--cor-escura);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+.btn-destaque {
+  background-color: var(--cor-destaque);
+  border: 2px solid var(--cor-destaque);
+  color: #FFFFFF;
+}
+
+.btn-destaque:hover,
+.btn-destaque:focus {
+  background-color: var(--cor-destaque-escura);
+  border-color: var(--cor-destaque-escura);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+.btn-outline-clinica {
+  background-color: transparent;
+  border: 2px solid var(--cor-primaria-escura);
+  color: var(--cor-primaria-escura);
+}
+
+.btn-outline-clinica:hover {
+  background-color: var(--cor-primaria-escura);
+  color: #FFFFFF;
+}
+
+/* Botão de WhatsApp exibido após o envio do formulário */
+.btn-whatsapp {
+  background-color: #1F8F4E;
+  border: 2px solid #1F8F4E;
+  color: #FFFFFF;
+}
+
+.btn-whatsapp:hover,
+.btn-whatsapp:focus {
+  background-color: #17703C;
+  border-color: #17703C;
+  color: #FFFFFF;
+}
+
+/* Campo honeypot: fora da tela para pessoas, mas visível para robôs */
+.campo-oculto {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  transform: none;
+}
+
+/* ---------- 4. Navbar ---------- */
+.navbar-clinica {
+  background-color: rgba(255, 255, 255, 0.97);
+  border-top: 4px solid var(--cor-primaria);
+  padding: 12px 0;
+  transition: var(--transicao);
+}
+
+/* Classe adicionada pelo JavaScript ao rolar a página */
+.navbar-clinica.rolando {
+  padding: 5px 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.marca {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+/* Nome em dourado com sombra escura, imitando as letras da placa */
+.marca-nome {
+  font-family: var(--fonte-titulo);
+  font-size: 1.6rem;
+  font-weight: 800;
+  font-style: italic;
+  color: var(--cor-secundaria);
+  text-shadow: 1px 1px 0 #7A5C0E, -1px -1px 0 #7A5C0E, 1px -1px 0 #7A5C0E, -1px 1px 0 #7A5C0E;
+  letter-spacing: 0.5px;
+}
+
+.marca-slogan {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--cor-texto-suave);
+  letter-spacing: 0.5px;
+}
+
+.navbar-clinica .nav-link {
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  color: var(--cor-escura);
+  margin: 0 6px;
+  position: relative;
+}
+
+.navbar-clinica .nav-link::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 2px;
+  width: 0;
+  height: 3px;
+  border-radius: 2px;
+  background-color: var(--cor-primaria);
+  transition: var(--transicao);
+  transform: translateX(-50%);
+}
+
+.navbar-clinica .nav-link:hover,
+.navbar-clinica .nav-link.active {
+  color: var(--cor-primaria-escura);
+}
+
+.navbar-clinica .nav-link:hover::after,
+.navbar-clinica .nav-link.active::after {
+  width: 60%;
+}
+
+.navbar-toggler {
+  border: none;
+  font-size: 1.8rem;
+  color: var(--cor-escura);
+}
+
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 3px rgba(224, 123, 46, 0.35);
+}
+
+/* ---------- 5. Carrossel (Início) ---------- */
+.secao-inicio {
+  padding-top: 76px; /* altura da navbar */
+}
+
+.carrossel-clinica .carousel-item img {
+  height: 560px;
+  object-fit: cover;
+}
+
+.carrossel-clinica .carousel-caption {
+  top: 50%;
+  bottom: auto;
+  left: 10%;
+  right: auto;
+  max-width: 520px;
+  transform: translateY(-50%);
+  text-align: left;
+  z-index: 2; /* fica acima das setas, para o botão ser clicável */
+}
+
+.carrossel-clinica .carousel-control-prev,
+.carrossel-clinica .carousel-control-next {
+  width: 6%;
+}
+
+.carrossel-clinica .carousel-caption h1,
+.carrossel-clinica .carousel-caption h2 {
+  color: #FFFFFF;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 800;
+}
+
+.carrossel-clinica .carousel-caption p {
+  font-size: 1.15rem;
+  margin-bottom: 24px;
+}
+
+.carrossel-clinica .carousel-indicators [data-bs-target] {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  background-color: #FFFFFF;
+  opacity: 0.6;
+}
+
+.carrossel-clinica .carousel-indicators .active {
+  width: 32px;
+  border-radius: 6px;
+  background-color: var(--cor-secundaria);
+  opacity: 1;
+}
+
+/* Destaques sobrepostos ao carrossel */
+.destaques {
+  position: relative;
+  margin-top: -50px;
+  z-index: 5;
+}
+
+.destaque-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background-color: #FFFFFF;
+  border-radius: var(--raio);
+  padding: 22px;
+  box-shadow: var(--sombra);
+  border-bottom: 4px solid var(--cor-primaria);
+  transition: var(--transicao);
+  height: 100%;
+}
+
+.destaque-item:hover {
+  transform: translateY(-5px);
+  border-bottom-color: var(--cor-secundaria);
+}
+
+.destaque-item i {
+  font-size: 2.2rem;
+  color: var(--cor-primaria);
+}
+
+.destaque-item h3 {
+  font-size: 1.1rem;
+  margin-bottom: 2px;
+}
+
+.destaque-item p {
+  margin: 0;
+  color: var(--cor-texto-suave);
+  font-size: 0.95rem;
+}
+
+/* ---------- 6. Serviços (filtros e cards) ---------- */
+.btn-filtro {
+  background-color: var(--cor-clara);
+  border: 2px solid transparent;
+  color: var(--cor-primaria-escura);
+}
+
+.btn-filtro:hover {
+  border-color: var(--cor-primaria);
+  color: var(--cor-primaria-escura);
+}
+
+/* Classe controlada pelo JavaScript */
+.btn-filtro.ativo {
+  background-color: var(--cor-primaria-escura);
+  color: #FFFFFF;
+}
+
+.card-servico {
+  border: none;
+  border-radius: var(--raio);
+  overflow: hidden;
+  box-shadow: var(--sombra);
+  transition: var(--transicao);
+  animation: aparecer 0.4s ease;
+}
+
+.card-servico:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 36px rgba(43, 47, 54, 0.2);
+}
+
+.card-servico .card-topo {
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--cor-primaria-escura), var(--cor-primaria) 60%, var(--cor-secundaria));
+}
+
+.card-servico .card-topo i {
+  font-size: 3.4rem;
+  color: #FFFFFF;
+  transition: var(--transicao);
+}
+
+.card-servico:hover .card-topo i {
+  transform: scale(1.15);
+  color: var(--cor-escura);
+}
+
+.card-servico .card-title {
+  font-size: 1.15rem;
+}
+
+.card-servico .card-text {
+  color: var(--cor-texto-suave);
+}
+
+.etiqueta {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 3px 12px;
+  border-radius: 50px;
+  background-color: rgba(224, 123, 46, 0.12);
+  color: var(--cor-primaria-escura);
+  margin-bottom: 10px;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(15px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- 7. Modal ---------- */
+.modal-clinica .modal-content {
+  border: none;
+  border-radius: var(--raio);
+  overflow: hidden;
+}
+
+.modal-clinica .modal-header {
+  background: linear-gradient(135deg, var(--cor-primaria-escura), var(--cor-primaria));
+  border-bottom: 4px solid var(--cor-secundaria);
+}
+
+.modal-clinica .modal-title {
+  color: #FFFFFF;
+  font-size: 1.3rem;
+}
+
+.modal-clinica .modal-footer {
+  border-top: none;
+}
+
+/* Lista com ícone de "check" */
+.lista-check {
+  list-style: none;
+  padding-left: 0;
+}
+
+.lista-check li {
+  position: relative;
+  padding-left: 28px;
+  margin-bottom: 6px;
+}
+
+.lista-check li::before {
+  content: '\F26A'; /* bi-check-circle-fill */
+  font-family: 'bootstrap-icons';
+  position: absolute;
+  left: 0;
+  color: var(--cor-primaria);
+}
+
+/* ---------- 8. Sobre nós ---------- */
+.numeros .numero {
+  display: block;
+  font-family: var(--fonte-titulo);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 800;
+  color: var(--cor-primaria);
+}
+
+.numeros small {
+  color: var(--cor-texto-suave);
+}
+
+.card-valor {
+  border: none;
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  border-top: 5px solid var(--cor-primaria);
+  transition: var(--transicao);
+}
+
+.card-valor:hover {
+  border-top-color: var(--cor-secundaria);
+  transform: translateY(-5px);
+}
+
+.icone-circulo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-size: 1.6rem;
+  margin-bottom: 14px;
+  background-color: rgba(224, 123, 46, 0.12);
+  color: var(--cor-primaria-escura);
+}
+
+/* ---------- 9. Contato ---------- */
+.info-contato {
+  background: linear-gradient(160deg, var(--cor-escura), #1F2228);
+  color: #FFFFFF;
+  border-radius: var(--raio);
+  border-top: 5px solid var(--cor-primaria);
+  padding: 32px;
+}
+
+.info-contato h3 {
+  color: var(--cor-secundaria);
+}
+
+.info-contato li {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.info-contato i {
+  color: var(--cor-primaria);
+  font-size: 1.2rem;
+}
+
+.info-contato a {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.info-contato a:hover {
+  color: var(--cor-secundaria);
+}
+
+.horarios li {
+  justify-content: space-between;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.25);
+  padding-bottom: 8px;
+}
+
+.mapa {
+  border: 0;
+  width: 100%;
+  height: 220px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+/* Etiqueta de status (aberto/fechado) controlada pelo JavaScript */
+.status-atendimento {
+  display: inline-block;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 50px;
+  background-color: rgba(255, 255, 255, 0.15);
+  margin-bottom: 22px;
+}
+
+.status-atendimento.aberto {
+  background-color: #2E8B57;
+}
+
+.status-atendimento.fechado {
+  background-color: #C0392B;
+}
+
+.form-clinica {
+  background-color: #FFFFFF;
+  border-radius: var(--raio);
+  padding: 32px;
+  box-shadow: var(--sombra);
+}
+
+.form-clinica .form-label {
+  font-weight: 700;
+  color: var(--cor-escura);
+}
+
+.form-clinica .form-control,
+.form-clinica .form-select {
+  border-radius: 10px;
+  padding: 11px 14px;
+  border: 2px solid #E6DED4;
+  background-color: var(--cor-clara);
+}
+
+.form-clinica .form-control:focus,
+.form-clinica .form-select:focus {
+  border-color: var(--cor-primaria);
+  box-shadow: 0 0 0 4px rgba(224, 123, 46, 0.18);
+  background-color: #FFFFFF;
+}
+
+.form-clinica .form-check-input:checked {
+  background-color: var(--cor-primaria);
+  border-color: var(--cor-primaria);
+}
+
+.contador {
+  color: var(--cor-texto-suave);
+  white-space: nowrap;
+  margin-top: 4px;
+}
+
+.contador.limite {
+  color: #C0392B;
+  font-weight: 700;
+}
+
+/* ---------- 10. Rodapé ---------- */
+.rodape {
+  background-color: var(--cor-escura);
+  border-top: 6px solid var(--cor-primaria);
+  color: rgba(255, 255, 255, 0.8);
+  padding: 60px 0 24px;
+}
+
+.rodape h3 {
+  color: var(--cor-secundaria);
+}
+
+.rodape a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: var(--transicao);
+}
+
+.rodape a:hover {
+  color: var(--cor-primaria);
+  padding-left: 4px;
+}
+
+.rodape hr {
+  border-color: rgba(255, 255, 255, 0.2);
+  margin: 30px 0 20px;
+}
+
+.redes a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  font-size: 1.2rem;
+}
+
+.redes a:hover {
+  background-color: var(--cor-primaria);
+  color: #FFFFFF;
+  padding-left: 0;
+}
+
+/* ---------- 11. Botão voltar ao topo ---------- */
+.btn-topo {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--cor-primaria);
+  color: #FFFFFF;
+  font-size: 1.3rem;
+  box-shadow: var(--sombra);
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--transicao);
+  z-index: 1000;
+}
+
+.btn-topo.visivel {
+  opacity: 1;
+  visibility: visible;
+}
+
+.btn-topo:hover {
+  background-color: var(--cor-escura);
+}
+
+/* ---------- 12. Responsividade ---------- */
+@media (max-width: 991.98px) {
+  .navbar-clinica .navbar-collapse {
+    padding: 12px 0;
+  }
+
+  .navbar-clinica .nav-link::after {
+    left: 0;
+    transform: none;
+  }
+
+  .carrossel-clinica .carousel-item img {
+    height: 460px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .secao {
+    padding: 60px 0;
+  }
+
+  .carrossel-clinica .carousel-item img {
+    height: 420px;
+    object-position: 80% center;
+  }
+
+  /* No celular, a legenda ocupa a largura e ganha um fundo para leitura */
+  .carrossel-clinica .carousel-caption {
+    left: 6%;
+    right: 6%;
+    max-width: none;
+    padding: 20px;
+    border-radius: var(--raio);
+    background-color: rgba(43, 47, 54, 0.8);
+  }
+
+  .carrossel-clinica .carousel-caption p {
+    font-size: 1rem;
+  }
+
+  .destaques {
+    margin-top: 30px;
+  }
+
+  .form-clinica,
+  .info-contato {
+    padding: 22px;
+  }
+
+  .marca-slogan {
+    display: none;
+  }
+}

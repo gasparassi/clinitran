@@ -1,0 +1,32 @@
+{
+    "name": "clinitran/site",
+    "description": "Site institucional da Clinitran Exames - exames médicos e psicotécnicos para CNH em Colatina (ES).",
+    "type": "project",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.2",
+        "ext-pdo_sqlite": "*",
+        "ext-curl": "*",
+        "ext-mbstring": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Clinitran\\": "src/"
+        }
+    },
+    "scripts": {
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "php -S localhost:8000 -t public bin/router.php"
+        ],
+        "gerar-senha": "php bin/gerar-senha.php",
+        "lint": "find src public bin config bootstrap.php -name '*.php' -exec php -l {} \\;"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "require-dev": {
+        "laravel/pint": "^1.32"
+    }
+}

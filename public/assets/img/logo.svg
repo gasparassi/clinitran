@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 140" role="img" aria-labelledby="t">
+  <title id="t">Logomarca Clinitran Exames - Exames médicos e psicotécnicos para CNH</title>
+  <!-- Símbolo: volante com um olho no centro -->
+  <g transform="translate(10 10)">
+    <circle cx="60" cy="60" r="56" fill="#E07B2E"/>
+    <circle cx="60" cy="60" r="43" fill="#FFFFFF"/>
+    <rect x="15" y="55" width="22" height="10" rx="3" fill="#E07B2E"/>
+    <rect x="83" y="55" width="22" height="10" rx="3" fill="#E07B2E"/>
+    <rect x="55" y="80" width="10" height="25" rx="3" fill="#E07B2E"/>
+    <path d="M30 60 C 42 40, 78 40, 90 60 C 78 80, 42 80, 30 60 Z" fill="#2B2F36"/>
+    <circle cx="60" cy="60" r="14" fill="#C9A227"/>
+    <circle cx="60" cy="60" r="6" fill="#2B2F36"/>
+    <circle cx="65" cy="55" r="3" fill="#FFFFFF"/>
+  </g>
+  <!-- Nome em dourado com contorno, como na placa da fachada -->
+  <text x="143" y="80" font-family="'Exo 2', 'Segoe UI', Arial, sans-serif" font-size="64" font-weight="800" font-style="italic"
+        fill="#C9A227" stroke="#7A5C0E" stroke-width="2" paint-order="stroke">CliniTran</text>
+  <rect x="147" y="92" width="390" height="3" rx="1.5" fill="#E07B2E"/>
+  <text x="147" y="120" font-family="'Nunito Sans', 'Segoe UI', Arial, sans-serif" font-size="15.5" font-weight="700" fill="#2B2F36" letter-spacing="0.5">EXAMES MÉDICOS E PSICOTÉCNICOS PARA CNH</text>
+</svg>
