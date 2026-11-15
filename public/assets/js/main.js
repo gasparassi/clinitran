@@ -336,9 +336,14 @@ function formatarData(dataISO) {
 }
 
 // Monta o link wa.me com o texto do contato já preenchido
-function criarLinkWhatsApp(dados, protocolo) {
+// (sem protocolo quando o contato não pôde ser registrado no servidor)
+function criarLinkWhatsApp(dados, protocolo = null) {
+  const abertura = protocolo
+    ? `Olá! Acabei de enviar um contato pelo site (protocolo nº ${protocolo}).`
+    : 'Olá! Vim pelo site e gostaria de atendimento.';
+
   const linhas = [
-    `Olá! Acabei de enviar um contato pelo site (protocolo nº ${protocolo}).`,
+    abertura,
     `*Nome:* ${dados.nome}`,
     `*Telefone:* ${dados.telefone}`,
     `*Assunto:* ${dados.assunto}`
@@ -352,8 +357,8 @@ function criarLinkWhatsApp(dados, protocolo) {
   return `https://wa.me/${WHATSAPP_CLINICA}?text=${encodeURIComponent(linhas.join('\n'))}`;
 }
 
-// Acrescenta ao alerta de sucesso o botão que abre o WhatsApp
-function adicionarBotaoWhatsApp(link) {
+// Acrescenta ao alerta o botão que abre o WhatsApp
+function adicionarBotaoWhatsApp(link, texto = 'Enviar também pelo WhatsApp') {
   const alerta = document.getElementById('alertaFormulario');
   const botao = document.createElement('a');
 
@@ -361,7 +366,8 @@ function adicionarBotaoWhatsApp(link) {
   botao.target = '_blank';
   botao.rel = 'noopener';
   botao.className = 'btn btn-whatsapp mt-3';
-  botao.innerHTML = '<i class="bi bi-whatsapp me-1"></i> Enviar também pelo WhatsApp';
+  botao.innerHTML = '<i class="bi bi-whatsapp me-1"></i> ';
+  botao.append(texto);
 
   alerta.appendChild(document.createElement('br'));
   alerta.appendChild(botao);
@@ -411,8 +417,10 @@ form.addEventListener('submit', async (evento) => {
       mostrarAlerta('danger', resultado.erro || 'Não foi possível enviar. Tente novamente.');
     }
   } catch (erro) {
-    // Acontece quando o site é aberto sem o servidor PHP (ex.: duplo clique no index.html)
-    mostrarAlerta('warning', 'Servidor indisponível. Inicie o site com "composer serve" para salvar as mensagens.');
+    // Acontece quando o site roda sem PHP (ex.: GitHub Pages ou duplo clique no index.html).
+    // Em vez de perder o contato, oferecemos o envio direto pelo WhatsApp.
+    mostrarAlerta('warning', 'Não foi possível registrar sua mensagem pelo site agora. Envie pelo WhatsApp, os dados já estão preenchidos:');
+    adicionarBotaoWhatsApp(criarLinkWhatsApp(dados), 'Enviar pelo WhatsApp');
   } finally {
     btnEnviar.disabled = false;
     btnEnviar.innerHTML = '<i class="bi bi-send me-1"></i> Enviar mensagem';

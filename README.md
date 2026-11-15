@@ -7,6 +7,17 @@ como atividade avaliativa do Módulo I – Desenvolvimento Web Front-end.
 **Tecnologias:** HTML5, CSS3, Bootstrap 5.3, JavaScript (ES6+) e PHP 8.2+ puro com Composer
 (autoload PSR-4) + SQLite, usado para salvar o formulário de contato.
 
+## Demonstração online
+
+Versão estática publicada no GitHub Pages: <https://gasparassi.github.io/clinitran/>
+
+O GitHub Pages não executa PHP. Por isso, nessa versão o formulário é validado normalmente,
+mas em vez de gravar no banco oferece o envio dos dados pelo WhatsApp da clínica. A área
+administrativa não é publicada. Para a versão completa, execute o projeto como descrito abaixo.
+
+A publicação é automática: a cada `git push` na branch `main` que altere `public/index.html`
+ou `public/assets/`, o workflow `.github/workflows/pages.yml` publica somente esses arquivos estáticos.
+
 ## Como executar
 
 Requisitos: PHP 8.2 ou superior (extensões `pdo_sqlite`, `curl` e `mbstring`) e [Composer](https://getcomposer.org).
@@ -56,6 +67,7 @@ Avaliacao_final/
 ├── config/config.exemplo.php          # Modelo de configuração (config.php fica fora do git)
 ├── bin/router.php                     # Roteador do servidor embutido (desenvolvimento)
 ├── bin/gerar-senha.php                # Gera o hash da senha do admin
+├── .github/workflows/pages.yml        # Publicação automática no GitHub Pages
 ├── database/schema.sql                # Tabelas "mensagens" e "tentativas"
 ├── Descrição Empresa Clinitran.docx   # Documento de identidade visual (etapa 1)
 └── Descrição Empresa Clinitran.pdf

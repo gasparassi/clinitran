@@ -1,0 +1,52 @@
+# Publica a parte estática do site (HTML, CSS, JS e imagens) no GitHub Pages.
+# O GitHub Pages não executa PHP: o formulário oferece o envio pelo WhatsApp
+# e a área administrativa não é publicada.
+
+name: Publicar no GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'public/index.html'
+      - 'public/assets/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch: # permite publicar manualmente pela aba "Actions"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.publicacao.outputs.page_url }}
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Separar somente os arquivos estáticos
+        run: |
+          mkdir _site
+          cp public/index.html _site/
+          cp -r public/assets _site/
+          touch _site/.nojekyll
+
+      - name: Configurar o GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Enviar os arquivos
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Publicar
+        id: publicacao
+        uses: actions/deploy-pages@v4
