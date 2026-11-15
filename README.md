@@ -31,6 +31,7 @@ composer serve       # inicia em http://localhost:8000
 acessível pelo navegador.
 
 - Site: <http://localhost:8000>
+- Web: <https://gasparassi.github.io/clinitran>
 - Área administrativa (mensagens recebidas): <http://localhost:8000/admin/login.php>
 
 O banco `database/clinitran.sqlite` é criado automaticamente no primeiro acesso.
