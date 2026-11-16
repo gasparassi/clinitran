@@ -63,6 +63,7 @@ Avaliacao_final/                       # Pasta principal (raiz do site)
 │   └── main.js                        # Interatividade do site
 ├── imagens/                           # Logo e ilustrações (SVG/PNG)
 ├── paginas/
+│   ├── politica-de-privacidade.html   # Política de Privacidade (LGPD)
 │   └── admin/                         # Área administrativa: login.php, mensagens.php, sair.php
 ├── api/
 │   └── contato.php                    # Recebe e grava o formulário (JSON)
@@ -122,6 +123,7 @@ automaticamente em todas as páginas que incluem o `bootstrap.php`.
 | Arquivos do CDN com verificação de integridade (SRI) | `index.html` |
 | Segredos (hash da senha e token) em variáveis de ambiente / `.env`, fora do git e inacessível pelo navegador | `.env`, `.gitignore`, `bin/router.php`, `.htaccess` |
 | Erros do PHP nunca aparecem para o visitante (vão apenas para o log) | `bootstrap.php` |
+| Política de Privacidade (LGPD) e exclusão automática dos contatos com mais de 12 meses | `paginas/politica-de-privacidade.html`, `src/Banco.php` |
 
 > `composer serve` usa o servidor embutido do PHP, que serve só para desenvolvimento.
 > Em produção, use Apache (o `.htaccess` já bloqueia as pastas internas) ou Nginx com regras

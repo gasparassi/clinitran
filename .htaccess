@@ -5,7 +5,7 @@ DirectoryIndex index.html
 
 # Bloqueia as pastas e arquivos internos do projeto (código PHP, configuração,
 # banco de dados, dependências e documentação), respondendo 404.
-RedirectMatch 404 ^/(src|config|database|vendor|bin|node_modules)(/|$)
+RedirectMatch 404 ^/(src|config|database|vendor|bin|comercial|node_modules)(/|$)
 RedirectMatch 404 /\.(git|github|env|htaccess)
 RedirectMatch 404 \.(sqlite|sql|lock|md|json|docx|yml|yaml|dist)$
 RedirectMatch 404 ^/(bootstrap\.php|composer\.(json|lock)|pint\.json)$

@@ -71,6 +71,9 @@ try {
     $protocolo = (int) $pdo->lastInsertId();
     $limite->registrar();
 
+    // Prazo de guarda da Política de Privacidade: mensagens com mais de 12 meses são excluídas
+    Banco::removerMensagensAntigas(12);
+
     // Aviso automático para a clínica (só funciona se as variáveis WHATSAPP_* estiverem no .env)
     $notificado = NotificadorWhatsApp::notificar($protocolo, $contato);
 

@@ -31,4 +31,19 @@ final class Banco
 
         return self::$conexao;
     }
+
+    /**
+     * Exclui as mensagens mais antigas que o prazo de guarda informado na
+     * Política de Privacidade (LGPD: os dados não ficam guardados para sempre).
+     * Retorna quantas mensagens foram excluídas.
+     */
+    public static function removerMensagensAntigas(int $meses = 12): int
+    {
+        $comando = self::conexao()->prepare(
+            "DELETE FROM mensagens WHERE criado_em < datetime('now', 'localtime', :prazo)"
+        );
+        $comando->execute([':prazo' => "-{$meses} months"]);
+
+        return $comando->rowCount();
+    }
 }

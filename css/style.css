@@ -626,6 +626,36 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
 }
 
+/* ---------- Páginas de texto (ex.: Política de Privacidade) ---------- */
+.conteudo-legal {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.conteudo-legal h1 {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  position: relative;
+  padding-bottom: 14px;
+}
+
+.conteudo-legal h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) skewX(-20deg);
+  width: 60px;
+  height: 5px;
+  background-color: var(--cor-primaria);
+}
+
+.conteudo-legal h2 {
+  font-size: 1.3rem;
+  margin-top: 2.2rem;
+  padding-left: 12px;
+  border-left: 5px solid var(--cor-primaria);
+}
+
 /* ---------- 10. Rodapé ---------- */
 .rodape {
   background-color: var(--cor-escura);
