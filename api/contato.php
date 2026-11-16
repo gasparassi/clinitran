@@ -71,7 +71,7 @@ try {
     $protocolo = (int) $pdo->lastInsertId();
     $limite->registrar();
 
-    // Aviso automático para a clínica (só funciona se config/config.php estiver configurado)
+    // Aviso automático para a clínica (só funciona se as variáveis WHATSAPP_* estiverem no .env)
     $notificado = NotificadorWhatsApp::notificar($protocolo, $contato);
 
     responder(201, ['sucesso' => true, 'id' => $protocolo, 'whatsapp_enviado' => $notificado]);

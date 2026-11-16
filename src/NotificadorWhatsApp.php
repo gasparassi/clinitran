@@ -8,8 +8,8 @@ namespace Clinitran;
  * Aviso automático por WhatsApp (API oficial - Meta Cloud API).
  * Envia para o celular da clínica um resumo de cada contato recebido pelo site.
  *
- * Fica desligado até existir o arquivo config/config.php com 'ativo' => true
- * (veja config/config.exemplo.php).
+ * Fica desligado até WHATSAPP_ATIVO=true no arquivo .env
+ * (veja .env.example).
  */
 final class NotificadorWhatsApp
 {

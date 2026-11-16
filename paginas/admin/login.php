@@ -72,8 +72,8 @@ $csrf = Autenticacao::tokenCsrf();
 
         <?php if (! $configurado) { ?>
           <div class="alert alert-warning">
-            O acesso ainda não foi configurado. Crie o arquivo <code>config/config.php</code>
-            a partir de <code>config/config.exemplo.php</code> e defina a senha (veja o README).
+            O acesso ainda não foi configurado. Crie o arquivo <code>.env</code>
+            a partir de <code>.env.example</code> e defina <code>ADMIN_SENHA_HASH</code> (veja o README).
           </div>
         <?php } else { ?>
           <form method="post" class="form-clinica">

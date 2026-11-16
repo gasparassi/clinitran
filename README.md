@@ -29,7 +29,7 @@ composer serve       # inicia em http://localhost:8000
 ```
 
 `composer serve` executa `php -S localhost:8000 bin/router.php`. O roteador só libera o `index.html`
-e as pastas do site; as pastas internas (`src/`, `config/`, `database/`, `vendor/`...) respondem 404.
+e as pastas do site; as pastas internas (`src/`, `database/`, `vendor/`...) respondem 404, assim como o `.env`.
 
 - Site: <http://localhost:8000>
 - Web: <https://gasparassi.github.io/clinitran>
@@ -39,10 +39,18 @@ O banco `database/clinitran.sqlite` é criado automaticamente no primeiro acesso
 
 ### Configurar a área administrativa
 
-1. Copie `config/config.exemplo.php` para `config/config.php`.
-2. Gere o hash da senha com `composer gerar-senha -- "sua senha forte"` e cole o resultado em `'senha_hash'`.
+Os segredos ficam no arquivo **`.env`** (padrão de variáveis de ambiente, lido com
+[`vlucas/phpdotenv`](https://github.com/vlucas/phpdotenv)), que nunca vai para o git.
 
-Sem o `config.php`, o site funciona normalmente, mas a área administrativa fica desativada.
+1. Copie `.env.example` para `.env`.
+2. Execute `composer gerar-senha -- "sua senha forte"` e cole no `.env` a linha `ADMIN_SENHA_HASH='...'`
+   que ele mostra. Mantenha as **aspas simples**: o hash contém `$`, que ferramentas como Docker e o
+   shell interpretariam como variável.
+
+Sem o `.env`, o site funciona normalmente, mas a área administrativa fica desativada.
+
+Em hospedagens que permitem definir variáveis de ambiente no painel, use os mesmos nomes do
+`.env.example`. As variáveis do servidor **têm prioridade** sobre o arquivo `.env`.
 
 ## Estrutura de pastas
 
@@ -65,17 +73,17 @@ Avaliacao_final/                       # Pasta principal (raiz do site)
 │   # ---- Arquivos internos (bloqueados para o navegador) ----
 ├── src/                               # Classes PHP (namespace Clinitran)
 │   ├── Banco.php                      # Conexão PDO com o SQLite
-│   ├── Configuracao.php               # Leitura de config/config.php
+│   ├── Configuracao.php               # Leitura das variáveis de ambiente (.env)
 │   ├── ValidadorContato.php           # Validação do formulário no servidor
 │   ├── LimiteTentativas.php           # Limite de envios e de logins por IP
 │   ├── Autenticacao.php               # Login, sessão e token CSRF
 │   ├── Seguranca.php                  # Cabeçalhos HTTP de segurança (CSP etc.)
 │   └── NotificadorWhatsApp.php        # Aviso automático por WhatsApp (API oficial)
-├── config/config.exemplo.php          # Modelo de configuração (config.php fica fora do git)
 ├── database/schema.sql                # Tabelas "mensagens" e "tentativas"
 ├── bin/router.php                     # Roteador do servidor embutido (lista de permissões)
 ├── bin/gerar-senha.php                # Gera o hash da senha do admin
-├── bootstrap.php                      # Carrega o autoload (usado por todas as páginas PHP)
+├── .env.example                       # Modelo das variáveis de ambiente (o .env fica fora do git)
+├── bootstrap.php                      # Carrega o autoload e o .env (usado por todas as páginas PHP)
 ├── composer.json / composer.lock      # Projeto Composer (autoload PSR-4: Clinitran\ → src/)
 ├── .htaccess                          # Bloqueios e cabeçalhos de segurança (hospedagem Apache)
 └── .github/workflows/pages.yml        # Publicação automática no GitHub Pages
@@ -112,6 +120,7 @@ automaticamente em todas as páginas que incluem o `bootstrap.php`.
 | Consultas com *prepared statements* (contra SQL injection) e saída escapada com `htmlspecialchars` (contra XSS) | `api/contato.php`, `paginas/admin/mensagens.php` |
 | Cabeçalhos CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy e Permissions-Policy | `src/Seguranca.php`, `.htaccess`, `<meta>` no `index.html` |
 | Arquivos do CDN com verificação de integridade (SRI) | `index.html` |
+| Segredos (hash da senha e token) em variáveis de ambiente / `.env`, fora do git e inacessível pelo navegador | `.env`, `.gitignore`, `bin/router.php`, `.htaccess` |
 | Erros do PHP nunca aparecem para o visitante (vão apenas para o log) | `bootstrap.php` |
 
 > `composer serve` usa o servidor embutido do PHP, que serve só para desenvolvimento.
@@ -131,7 +140,6 @@ do WhatsApp (Meta Cloud API):
 2. Crie e envie para aprovação um modelo de mensagem chamado `novo_contato_site`
    (idioma `pt_BR`), com 5 variáveis:
    `Novo contato pelo site (protocolo {{1}}). Nome: {{2}}. Telefone: {{3}}. Assunto: {{4}}. Data de preferência: {{5}}.`
-3. Em `config/config.php`, preencha o token e o ID do número remetente na seção `whatsapp`
-   e mude `'ativo'` para `true`.
+3. No `.env`, preencha `WHATSAPP_TOKEN` e `WHATSAPP_PHONE_NUMBER_ID` e mude `WHATSAPP_ATIVO` para `true`.
 
 Se o envio falhar, o contato continua salvo normalmente e o erro fica registrado no log do PHP.

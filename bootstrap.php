@@ -2,7 +2,8 @@
 
 /**
  * Ponto de partida de todas as páginas PHP.
- * Carrega o autoload do Composer (classes em src/ e pacotes instalados em vendor/).
+ * Carrega o autoload do Composer (classes em src/ e pacotes instalados em vendor/)
+ * e as variáveis de ambiente do arquivo .env.
  */
 
 declare(strict_types=1);
@@ -21,3 +22,7 @@ if (! is_file($autoload)) {
 }
 
 require $autoload;
+
+// Lê o .env (se existir). Variáveis já definidas no servidor têm prioridade e não são sobrescritas.
+// safeLoad: sem o arquivo .env o site continua funcionando (admin e WhatsApp ficam desativados).
+Dotenv\Dotenv::createImmutable(RAIZ_PROJETO)->safeLoad();
