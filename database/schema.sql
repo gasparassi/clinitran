@@ -1,5 +1,5 @@
 -- Estrutura do banco SQLite da Clinitran
--- O arquivo clinitran.sqlite é criado automaticamente por app/conexao.php
+-- O arquivo clinitran.sqlite é criado automaticamente por src/Banco.php
 
 CREATE TABLE IF NOT EXISTS mensagens (
     id             INTEGER PRIMARY KEY AUTOINCREMENT,

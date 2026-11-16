@@ -1,8 +1,16 @@
-# Usado apenas em hospedagem com Apache (o DocumentRoot deve apontar para esta pasta "public").
-# Aplica aos arquivos estáticos os mesmos cabeçalhos de segurança que o PHP envia.
+# Usado apenas em hospedagem com Apache (o DocumentRoot aponta para esta pasta principal).
 
 Options -Indexes
+DirectoryIndex index.html
 
+# Bloqueia as pastas e arquivos internos do projeto (código PHP, configuração,
+# banco de dados, dependências e documentação), respondendo 404.
+RedirectMatch 404 ^/(src|config|database|vendor|bin|node_modules)(/|$)
+RedirectMatch 404 /\.(git|github|env|htaccess)
+RedirectMatch 404 \.(sqlite|sql|lock|md|json|docx|yml|yaml|dist)$
+RedirectMatch 404 ^/(bootstrap\.php|composer\.(json|lock)|pint\.json)$
+
+# Aplica aos arquivos estáticos os mesmos cabeçalhos de segurança que o PHP envia.
 <IfModule mod_headers.c>
     Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src 'self' https://cdn.jsdelivr.net https://fonts.gstatic.com; img-src 'self' data:; frame-src https://www.google.com; connect-src 'self'; form-action 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'"
     Header always set X-Content-Type-Options "nosniff"

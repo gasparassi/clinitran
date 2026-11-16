@@ -11,7 +11,7 @@ final class Autenticacao
 {
     private const TEMPO_MAXIMO_INATIVO = 1800; // 30 minutos
 
-    private const CAMINHO_COOKIE = '/admin';
+    private const CAMINHO_COOKIE = '/paginas/admin';
 
     public static function iniciarSessao(): void
     {

@@ -36,18 +36,18 @@ function e(?string $texto): string
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <title>Mensagens recebidas - Clinitran Exames</title>
-  <link rel="icon" type="image/svg+xml" href="../assets/img/logo-icone.svg">
+  <link rel="icon" type="image/svg+xml" href="../../imagens/logo-icone.svg">
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,600;0,700;0,800;1,800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <link href="../assets/css/style.css" rel="stylesheet">
+  <link href="../../css/style.css" rel="stylesheet">
 </head>
 <body class="secao-clara">
   <main class="container py-5">
     <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
       <h1 class="h3 mb-0">Mensagens recebidas (<?= count($mensagens) ?>)</h1>
       <div class="d-flex gap-2">
-        <a href="../index.html" class="btn btn-outline-clinica">Voltar ao site</a>
+        <a href="../../index.html" class="btn btn-outline-clinica">Voltar ao site</a>
         <form method="post" action="sair.php">
           <input type="hidden" name="csrf" value="<?= e($csrf) ?>">
           <button type="submit" class="btn btn-primario">Sair</button>

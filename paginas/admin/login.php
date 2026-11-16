@@ -55,18 +55,18 @@ $csrf = Autenticacao::tokenCsrf();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <title>Área administrativa - Clinitran Exames</title>
-  <link rel="icon" type="image/svg+xml" href="../assets/img/logo-icone.svg">
+  <link rel="icon" type="image/svg+xml" href="../../imagens/logo-icone.svg">
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,600;0,700;0,800;1,800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <link href="../assets/css/style.css" rel="stylesheet">
+  <link href="../../css/style.css" rel="stylesheet">
 </head>
 <body class="secao-clara">
   <main class="container py-5">
     <div class="row justify-content-center">
       <div class="col-12 col-sm-9 col-md-6 col-lg-4">
         <div class="text-center mb-4">
-          <img src="../assets/img/logo-icone.svg" alt="Símbolo da Clinitran" width="64" height="64">
+          <img src="../../imagens/logo-icone.svg" alt="Símbolo da Clinitran" width="64" height="64">
           <h1 class="h4 mt-3">Área administrativa</h1>
         </div>
 
@@ -93,7 +93,7 @@ $csrf = Autenticacao::tokenCsrf();
           </form>
         <?php } ?>
 
-        <p class="text-center mt-3"><a href="../index.html">Voltar ao site</a></p>
+        <p class="text-center mt-3"><a href="../../index.html">Voltar ao site</a></p>
       </div>
     </div>
   </main>

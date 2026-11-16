@@ -15,8 +15,9 @@ O GitHub Pages não executa PHP. Por isso, nessa versão o formulário é valida
 mas em vez de gravar no banco oferece o envio dos dados pelo WhatsApp da clínica. A área
 administrativa não é publicada. Para a versão completa, execute o projeto como descrito abaixo.
 
-A publicação é automática: a cada `git push` na branch `main` que altere `public/index.html`
-ou `public/assets/`, o workflow `.github/workflows/pages.yml` publica somente esses arquivos estáticos.
+A publicação é automática: a cada `git push` na branch `main` que altere o `index.html` ou as pastas
+`css/`, `js/`, `imagens/`, `videos/` ou `paginas/`, o workflow `.github/workflows/pages.yml` publica
+somente esses arquivos estáticos (os `.php` são removidos).
 
 ## Como executar
 
@@ -27,12 +28,12 @@ composer install     # gera o autoload em vendor/
 composer serve       # inicia em http://localhost:8000
 ```
 
-`composer serve` executa `php -S localhost:8000 -t public bin/router.php`. Só a pasta `public/` fica
-acessível pelo navegador.
+`composer serve` executa `php -S localhost:8000 bin/router.php`. O roteador só libera o `index.html`
+e as pastas do site; as pastas internas (`src/`, `config/`, `database/`, `vendor/`...) respondem 404.
 
 - Site: <http://localhost:8000>
 - Web: <https://gasparassi.github.io/clinitran>
-- Área administrativa (mensagens recebidas): <http://localhost:8000/admin/login.php>
+- Área administrativa (mensagens recebidas): <http://localhost:8000/paginas/admin/login.php>
 
 O banco `database/clinitran.sqlite` é criado automaticamente no primeiro acesso.
 
@@ -46,17 +47,22 @@ Sem o `config.php`, o site funciona normalmente, mas a área administrativa fica
 ## Estrutura de pastas
 
 ```
-Avaliacao_final/
-├── composer.json / composer.lock      # Projeto Composer (autoload PSR-4: Clinitran\ → src/)
-├── bootstrap.php                      # Carrega o autoload (usado por todas as páginas PHP)
-├── public/                            # ÚNICA pasta acessível pela web
-│   ├── index.html                     # Página única: Início, Serviços, Sobre nós, Contato
-│   ├── assets/css/style.css           # Estilos próprios (personalização do Bootstrap)
-│   ├── assets/js/main.js              # Interatividade do site
-│   ├── assets/img/                    # Logo e ilustrações (SVG)
-│   ├── api/contato.php                # Recebe e grava o formulário (JSON)
-│   ├── admin/                         # login.php, mensagens.php, sair.php
-│   └── .htaccess                      # Cabeçalhos de segurança (hospedagem Apache)
+Avaliacao_final/                       # Pasta principal (raiz do site)
+├── index.html                         # Página principal: Início, Serviços, Sobre nós, Contato
+├── css/
+│   └── style.css                      # Estilos próprios (personalização do Bootstrap)
+├── js/
+│   └── main.js                        # Interatividade do site
+├── imagens/                           # Logo e ilustrações (SVG/PNG)
+├── paginas/
+│   └── admin/                         # Área administrativa: login.php, mensagens.php, sair.php
+├── api/
+│   └── contato.php                    # Recebe e grava o formulário (JSON)
+├── Descrição Empresa Clinitran.docx   # Documento de identidade visual (etapa 1)
+├── Descrição Empresa Clinitran.pdf
+├── README.md
+│
+│   # ---- Arquivos internos (bloqueados para o navegador) ----
 ├── src/                               # Classes PHP (namespace Clinitran)
 │   ├── Banco.php                      # Conexão PDO com o SQLite
 │   ├── Configuracao.php               # Leitura de config/config.php
@@ -66,13 +72,17 @@ Avaliacao_final/
 │   ├── Seguranca.php                  # Cabeçalhos HTTP de segurança (CSP etc.)
 │   └── NotificadorWhatsApp.php        # Aviso automático por WhatsApp (API oficial)
 ├── config/config.exemplo.php          # Modelo de configuração (config.php fica fora do git)
-├── bin/router.php                     # Roteador do servidor embutido (desenvolvimento)
-├── bin/gerar-senha.php                # Gera o hash da senha do admin
-├── .github/workflows/pages.yml        # Publicação automática no GitHub Pages
 ├── database/schema.sql                # Tabelas "mensagens" e "tentativas"
-├── Descrição Empresa Clinitran.docx   # Documento de identidade visual (etapa 1)
-└── Descrição Empresa Clinitran.pdf
+├── bin/router.php                     # Roteador do servidor embutido (lista de permissões)
+├── bin/gerar-senha.php                # Gera o hash da senha do admin
+├── bootstrap.php                      # Carrega o autoload (usado por todas as páginas PHP)
+├── composer.json / composer.lock      # Projeto Composer (autoload PSR-4: Clinitran\ → src/)
+├── .htaccess                          # Bloqueios e cabeçalhos de segurança (hospedagem Apache)
+└── .github/workflows/pages.yml        # Publicação automática no GitHub Pages
 ```
+
+Novos arquivos seguem a mesma lógica: estilos em `css/`, scripts em `js/`, imagens em `imagens/`,
+vídeos em `videos/` e outras páginas em `paginas/`. Todos usam caminhos relativos ao `index.html`.
 
 Para instalar um pacote no futuro, use `composer require vendor/pacote`. Ele fica disponível
 automaticamente em todas as páginas que incluem o `bootstrap.php`.
@@ -94,18 +104,19 @@ automaticamente em todas as páginas que incluem o `bootstrap.php`.
 
 | Proteção | Onde |
 |---|---|
-| Apenas `public/` é acessível: banco, configuração, código e `.git` ficam fora da web | estrutura de pastas, `bin/router.php` |
-| Área administrativa com login, senha com hash (`password_hash`), sessão com cookie `HttpOnly` e `SameSite=Strict`, expiração por inatividade e token CSRF | `src/Autenticacao.php`, `public/admin/` |
-| Limite de 5 tentativas de login erradas por IP a cada 15 minutos | `public/admin/login.php` |
-| Limite de 5 mensagens por IP a cada 10 minutos e campo "honeypot" contra robôs | `public/api/contato.php` |
+| Somente o `index.html` e as pastas do site são acessíveis; banco, configuração, código, `vendor/` e `.git` respondem 404 | `bin/router.php`, `.htaccess` |
+| Área administrativa com login, senha com hash (`password_hash`), sessão com cookie `HttpOnly` e `SameSite=Strict`, expiração por inatividade e token CSRF | `src/Autenticacao.php`, `paginas/admin/` |
+| Limite de 5 tentativas de login erradas por IP a cada 15 minutos | `paginas/admin/login.php` |
+| Limite de 5 mensagens por IP a cada 10 minutos e campo "honeypot" contra robôs | `api/contato.php` |
 | Validação no servidor de tipo, tamanho e formato de cada campo (incluindo data real e dia útil) | `src/ValidadorContato.php` |
-| Consultas com *prepared statements* (contra SQL injection) e saída escapada com `htmlspecialchars` (contra XSS) | `public/api/contato.php`, `public/admin/mensagens.php` |
-| Cabeçalhos CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy e Permissions-Policy | `src/Seguranca.php`, `public/.htaccess` |
-| Arquivos do CDN com verificação de integridade (SRI) | `public/index.html` |
+| Consultas com *prepared statements* (contra SQL injection) e saída escapada com `htmlspecialchars` (contra XSS) | `api/contato.php`, `paginas/admin/mensagens.php` |
+| Cabeçalhos CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy e Permissions-Policy | `src/Seguranca.php`, `.htaccess`, `<meta>` no `index.html` |
+| Arquivos do CDN com verificação de integridade (SRI) | `index.html` |
 | Erros do PHP nunca aparecem para o visitante (vão apenas para o log) | `bootstrap.php` |
 
 > `composer serve` usa o servidor embutido do PHP, que serve só para desenvolvimento.
-> Em produção, use Apache ou Nginx com o *document root* apontando para `public/` e HTTPS ativado.
+> Em produção, use Apache (o `.htaccess` já bloqueia as pastas internas) ou Nginx com regras
+> equivalentes, sempre com HTTPS ativado.
 
 ## Aviso automático por WhatsApp (opcional)
 

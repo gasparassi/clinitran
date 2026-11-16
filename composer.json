@@ -17,10 +17,10 @@
     "scripts": {
         "serve": [
             "Composer\\Config::disableProcessTimeout",
-            "php -S localhost:8000 -t public bin/router.php"
+            "php -S localhost:8000 bin/router.php"
         ],
         "gerar-senha": "php bin/gerar-senha.php",
-        "lint": "find src public bin config bootstrap.php -name '*.php' -exec php -l {} \\;"
+        "lint": "find src api paginas bin config bootstrap.php -name '*.php' -exec php -l {} \\;"
     },
     "config": {
         "optimize-autoloader": true,

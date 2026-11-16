@@ -8,8 +8,12 @@ on:
   push:
     branches: [main]
     paths:
-      - 'public/index.html'
-      - 'public/assets/**'
+      - 'index.html'
+      - 'css/**'
+      - 'js/**'
+      - 'imagens/**'
+      - 'videos/**'
+      - 'paginas/**'
       - '.github/workflows/pages.yml'
   workflow_dispatch: # permite publicar manualmente pela aba "Actions"
 
@@ -35,8 +39,13 @@ jobs:
       - name: Separar somente os arquivos estáticos
         run: |
           mkdir _site
-          cp public/index.html _site/
-          cp -r public/assets _site/
+          cp index.html _site/
+          for pasta in css js imagens videos paginas; do
+            if [ -d "$pasta" ]; then cp -r "$pasta" _site/; fi
+          done
+          # Remove os arquivos PHP (o GitHub Pages não os executa)
+          find _site -name '*.php' -delete
+          find _site -type d -empty -delete
           touch _site/.nojekyll
 
       - name: Configurar o GitHub Pages
